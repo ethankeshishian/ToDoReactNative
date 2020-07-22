@@ -36,20 +36,8 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 
 import {createStore} from 'redux';
 import {Provider, connect} from 'react-redux';
-
-//actions
-function addItem(item: any) {
-  return {
-    type: 'ADD_ITEM',
-    data: item,
-  };
-}
-function deleteItem(key: string) {
-  return {
-    type: 'DELETE_ITEM',
-    data: key,
-  };
-}
+import {addItem} from './actions/addItem';
+import {deleteItem} from './actions/deleteItem';
 
 const App = () => {
   function Submit(props: any) {
