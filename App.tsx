@@ -35,6 +35,18 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 
 // declare const global: {HermesInternal: null | {}};
 
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import {connect} from 'react-redux';
+
+//actions
+function addItem(item: string) {
+  return {
+    type: 'ADD_ITEM',
+    data: item,
+  };
+}
+
 const App = () => {
   function Submit(props: any) {
     const [item, setItem] = useState('');
@@ -85,6 +97,19 @@ const App = () => {
     const handleDelete = (rowKey: any) => {
       console.log('onLeftAction', rowKey);
     };
+    // const closeRow = (rowMap, rowKey) => {
+    //   if (rowMap[rowKey]) {
+    //     rowMap[rowKey].closeRow();
+    //   }
+    // };
+    // const deleteRow = (rowMap, rowKey) => {
+    //   closeRow(rowMap, rowKey);
+    //   const newData = [...listData];
+    //   const prevIndex = listData.findIndex((item) => item.key === rowKey);
+    //   newData.splice(prevIndex, 1);
+    //   props.setList(newData);
+    // };
+
     //might not be necessary
     // const onSwipeValueChange = (swipeData) => {
     //   const {key, value} = swipeData;
@@ -115,6 +140,8 @@ const App = () => {
           useNativeDriver={false}
           onLeftAction={handleDelete}
           onRightAction={handleDelete}
+          leftActivationValue={100}
+          rightActivationValue={-200}
         />
       </>
     );
@@ -166,22 +193,37 @@ const App = () => {
   // }
 
   function MyListContainer() {
-    const [list, setList] = useState([
-      {value: 'Wash the dishes'},
-      {value: 'Make my bed'},
-    ]);
+    const initialState = {
+      items: [{value: 'Wash the dishes'}, {value: 'Make my bed'}],
+    };
 
-    function addItem(item: any) {
-      const newItem = {value: item};
-      setList([...list, newItem]);
-      console.log('added');
+    //function needs testing
+    function reducer(state = initialState, action) {
+      switch (action.type) {
+        case 'ADD_ITEM':
+          console.log('added item');
+          return {
+            ...state,
+            items: [...state.items, action.data],
+          };
+        default:
+          return state;
+      }
     }
 
+    const store = createStore(reducer);
+
+    // function addItem(item: any) {
+    //   const newItem = {value: item};
+    //   setList([...list, newItem]);
+    //   console.log('added');
+    // }
+    //remove addItem when done with redux
     return (
-      <>
-        <Items data={list} />
+      <Provider store={store}>
+        <Items />
         <Submit handleSubmit={addItem} />
-      </>
+      </Provider>
     );
   }
 
