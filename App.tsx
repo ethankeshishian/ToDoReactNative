@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -20,6 +21,7 @@ import {
   View,
   Animated,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 
 import {SwipeListView} from 'react-native-swipe-list-view';
@@ -35,28 +37,14 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 
 const App = () => {
   function Submit(props: any) {
-    const [item, setItem] = useState("I can't edit this text?");
+    const [item, setItem] = useState('');
 
-    // function handleSubmit(e: any) {
-    //   if (item !== '') {
-    //     props.handleSubmit(item);
-    //     setItem('');
-    //   }
-    //   e.preventDefault();
-    // }
     function handleSubmit() {
       if (item !== '') {
         props.handleSubmit(item);
         setItem('');
       }
     }
-
-    // function handleItemState(e: any) {
-    //   setItem(e.target.value);
-    // }
-    // function handleItemState(newText: string) {
-    //   setItem(newText);
-    // }
 
     return (
       <View>
@@ -86,18 +74,47 @@ const App = () => {
         </TouchableHighlight>
       </Animated.View>
     );
+    const renderHiddenItem = () => (
+      <View style={styles.rowBack}>
+        <View style={[styles.backRightBtn, styles.backRightBtnRight]}>
+          <Text style={styles.backTextWhite}>Delete</Text>
+        </View>
+      </View>
+    );
+
+    const handleDelete = (rowKey: any) => {
+      console.log('onLeftAction', rowKey);
+    };
+    //might not be necessary
+    // const onSwipeValueChange = (swipeData) => {
+    //   const {key, value} = swipeData;
+    //   if (value < -Dimensions.get('window').width && !this.animationIsRunning) {
+    //     this.animationIsRunning = true;
+    //     Animated.timing(rowTranslateAnimatedValues[key], {
+    //       toValue: 0,
+    //       duration: 200,
+    //       useNativeDriver: false,
+    //     }).start(() => {
+    //       const newData = [...listData];
+    //       const prevIndex = listData.findIndex((item) => item.key === key);
+    //       newData.splice(prevIndex, 1);
+    //       setListData(newData);
+    //       this.animationIsRunning = false;
+    //     });
+    //   }
+    // };
     return (
       <>
         <SwipeListView
+          disableRightSwipe
           data={listData}
           renderItem={renderItem}
-          renderHiddenItem={() => (
-            <View style={styles.rowBack}>
-              <View style={[styles.backRightBtn, styles.backRightBtnRight]}>
-                <Text style={styles.backTextWhite}>Delete</Text>
-              </View>
-            </View>
-          )}
+          renderHiddenItem={renderHiddenItem}
+          rightOpenValue={-Dimensions.get('window').width}
+          // onSwipeValueChange={onSwipeValueChange}
+          useNativeDriver={false}
+          onLeftAction={handleDelete}
+          onRightAction={handleDelete}
         />
       </>
     );
@@ -157,6 +174,7 @@ const App = () => {
     function addItem(item: any) {
       const newItem = {value: item};
       setList([...list, newItem]);
+      console.log('added');
     }
 
     return (
@@ -176,42 +194,6 @@ const App = () => {
           {/* // contentInsetAdjustmentBehavior="automatic" */}
         </ScrollView>
         <MyListContainer />
-        {/* <Header /> */}
-
-        {/* <button onSubmit={handleSubmit} /> */}
-        {/* {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change
-                this screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View> */}
       </SafeAreaView>
     </>
   );
@@ -303,3 +285,46 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+{
+  /* <Header /> */
+}
+
+{
+  /* <button onSubmit={handleSubmit} /> */
+}
+{
+  /* {global.HermesInternal == null ? null : (
+            <View style={styles.engine}>
+              <Text style={styles.footer}>Engine: Hermes</Text>
+            </View>
+          )}
+          <View style={styles.body}>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Step One</Text>
+              <Text style={styles.sectionDescription}>
+                Edit <Text style={styles.highlight}>App.tsx</Text> to change
+                this screen and then come back to see your edits.
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>See Your Changes</Text>
+              <Text style={styles.sectionDescription}>
+                <ReloadInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Debug</Text>
+              <Text style={styles.sectionDescription}>
+                <DebugInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Learn More</Text>
+              <Text style={styles.sectionDescription}>
+                Read the docs to discover what to do next:
+              </Text>
+            </View>
+            <LearnMoreLinks />
+          </View> */
+}
