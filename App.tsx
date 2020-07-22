@@ -36,11 +36,10 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 // declare const global: {HermesInternal: null | {}};
 
 import {createStore} from 'redux';
-import {Provider} from 'react-redux';
-import {connect} from 'react-redux';
+import {Provider, connect} from 'react-redux';
 
 //actions
-function addItem(item: string) {
+function addItem(item: any) {
   return {
     type: 'ADD_ITEM',
     data: item,
@@ -53,7 +52,8 @@ const App = () => {
 
     function handleSubmit() {
       if (item !== '') {
-        props.handleSubmit(item);
+        console.log('reached handlesubmit function');
+        props.addItem(item);
         setItem('');
       }
     }
@@ -71,17 +71,18 @@ const App = () => {
     );
   }
 
+  const mapDispatchToProps = {
+    addItem,
+  };
+  const SubmitConnect = connect(null, mapDispatchToProps)(Submit);
+
   function Items(props: any) {
-    const listData = props.data;
-    const renderItem = (data: {
-      item: {value: string};
-      index: number;
-      separators: object;
-    }) => (
+    const listData = props.items;
+    const renderItem = (data: any) => (
       <Animated.View>
         <TouchableHighlight style={styles.rowFront} underlayColor={'#AAA'}>
           <View>
-            <Text>{data.item.value}</Text>
+            <Text>{data.item}</Text>
           </View>
         </TouchableHighlight>
       </Animated.View>
@@ -97,37 +98,7 @@ const App = () => {
     const handleDelete = (rowKey: any) => {
       console.log('onLeftAction', rowKey);
     };
-    // const closeRow = (rowMap, rowKey) => {
-    //   if (rowMap[rowKey]) {
-    //     rowMap[rowKey].closeRow();
-    //   }
-    // };
-    // const deleteRow = (rowMap, rowKey) => {
-    //   closeRow(rowMap, rowKey);
-    //   const newData = [...listData];
-    //   const prevIndex = listData.findIndex((item) => item.key === rowKey);
-    //   newData.splice(prevIndex, 1);
-    //   props.setList(newData);
-    // };
 
-    //might not be necessary
-    // const onSwipeValueChange = (swipeData) => {
-    //   const {key, value} = swipeData;
-    //   if (value < -Dimensions.get('window').width && !this.animationIsRunning) {
-    //     this.animationIsRunning = true;
-    //     Animated.timing(rowTranslateAnimatedValues[key], {
-    //       toValue: 0,
-    //       duration: 200,
-    //       useNativeDriver: false,
-    //     }).start(() => {
-    //       const newData = [...listData];
-    //       const prevIndex = listData.findIndex((item) => item.key === key);
-    //       newData.splice(prevIndex, 1);
-    //       setListData(newData);
-    //       this.animationIsRunning = false;
-    //     });
-    //   }
-    // };
     return (
       <>
         <SwipeListView
@@ -140,65 +111,27 @@ const App = () => {
           useNativeDriver={false}
           onLeftAction={handleDelete}
           onRightAction={handleDelete}
-          leftActivationValue={100}
-          rightActivationValue={-200}
+          // leftActivationValue={100}
+          // rightActivationValue={-200}
         />
       </>
     );
   }
 
-  //   const renderItem = (data: any) => (
-  //     <Animated.View>
-  //       {/* style={[
-  //       //   styles.rowFrontContainer,
-  //       //   {
-  //       //     height: rowTranslateAnimatedValues[data.item.key].interpolate({
-  //       //       inputRange: [0, 1],
-  //       //       outputRange: [0, 50],
-  //       //     }),
-  //       //   },
-  //       // ]}> */}
-  //       <TouchableHighlight
-  //         onPress={() => console.log('You touched me')}
-  //         style={styles.rowFront}
-  //         underlayColor={'#AAA'}>
-  //         <View>
-  //           <Text>I am {data.item.text} in a SwipeListView</Text>
-  //         </View>
-  //       </TouchableHighlight>
-  //     </Animated.View>
-  //   );
-
-  //   const renderHiddenItem = () => (
-  //     <View style={styles.rowBack}>
-  //       <View style={[styles.backRightBtn, styles.backRightBtnRight]}>
-  //         <Text style={styles.backTextWhite}>Delete</Text>
-  //       </View>
-  //     </View>
-  //   );
-
-  //   return (
-  //     <View style={styles.container}>
-  //       <SwipeListView
-  //         disableRightSwipe
-  //         data={listData}
-  //         renderItem={renderItem}
-  //         renderHiddenItem={renderHiddenItem}
-  //         rightOpenValue={-Dimensions.get('window').width}
-  //         // onSwipeValueChange={onSwipeValueChange}
-  //         useNativeDriver={false}
-  //       />
-  //     </View>
-  //   );
-  // }
+  function mapStateToProps(state: any) {
+    return {
+      items: state.items,
+    };
+  }
+  const ItemsConnect = connect(mapStateToProps)(Items);
 
   function MyListContainer() {
     const initialState = {
-      items: [{value: 'Wash the dishes'}, {value: 'Make my bed'}],
+      items: ['Wash the dishes', 'Make my bed'],
     };
 
     //function needs testing
-    function reducer(state = initialState, action) {
+    function reducer(state = initialState, action: {type: any; data: any}) {
       switch (action.type) {
         case 'ADD_ITEM':
           console.log('added item');
@@ -213,16 +146,10 @@ const App = () => {
 
     const store = createStore(reducer);
 
-    // function addItem(item: any) {
-    //   const newItem = {value: item};
-    //   setList([...list, newItem]);
-    //   console.log('added');
-    // }
-    //remove addItem when done with redux
     return (
       <Provider store={store}>
-        <Items />
-        <Submit handleSubmit={addItem} />
+        <ItemsConnect />
+        <SubmitConnect />
       </Provider>
     );
   }
@@ -370,3 +297,35 @@ export default App;
             <LearnMoreLinks />
           </View> */
 }
+
+// const closeRow = (rowMap, rowKey) => {
+//   if (rowMap[rowKey]) {
+//     rowMap[rowKey].closeRow();
+//   }
+// };
+// const deleteRow = (rowMap, rowKey) => {
+//   closeRow(rowMap, rowKey);
+//   const newData = [...listData];
+//   const prevIndex = listData.findIndex((item) => item.key === rowKey);
+//   newData.splice(prevIndex, 1);
+//   props.setList(newData);
+// };
+
+//might not be necessary
+// const onSwipeValueChange = (swipeData) => {
+//   const {key, value} = swipeData;
+//   if (value < -Dimensions.get('window').width && !this.animationIsRunning) {
+//     this.animationIsRunning = true;
+//     Animated.timing(rowTranslateAnimatedValues[key], {
+//       toValue: 0,
+//       duration: 200,
+//       useNativeDriver: false,
+//     }).start(() => {
+//       const newData = [...listData];
+//       const prevIndex = listData.findIndex((item) => item.key === key);
+//       newData.splice(prevIndex, 1);
+//       setListData(newData);
+//       this.animationIsRunning = false;
+//     });
+//   }
+// };
