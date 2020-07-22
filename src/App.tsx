@@ -38,6 +38,7 @@ import {createStore} from 'redux';
 import {Provider, connect} from 'react-redux';
 import {addItem} from './actions/addItem';
 import {deleteItem} from './actions/deleteItem';
+import reducer from './reducers/itemReducer';
 
 const App = () => {
   function Submit(props: any) {
@@ -131,40 +132,6 @@ const App = () => {
   const ItemsConnect = connect(mapStateToProps, mapDispatchToProps2)(Items);
 
   function MyListContainer() {
-    const initialState = {
-      items: [
-        {value: 'Wash the dishes', key: '0'},
-        {value: 'Make my bed', key: '1'},
-      ],
-    };
-
-    let newKey = 1;
-    //function needs testing
-    function reducer(state = initialState, action: {type: any; data: any}) {
-      switch (action.type) {
-        case 'ADD_ITEM':
-          console.log('added item');
-          newKey++;
-          let newKeyString = newKey.toString();
-          return {
-            ...state,
-            items: [...state.items, {value: action.data, key: newKeyString}],
-          };
-        case 'DELETE_ITEM':
-          const newData = [...state.items];
-          const prevIndex = state.items.findIndex(
-            (item) => item.key === action.data,
-          );
-          newData.splice(prevIndex, 1);
-          return {
-            ...state,
-            items: newData,
-          };
-        default:
-          return state;
-      }
-    }
-
     const store = createStore(reducer);
 
     return (
