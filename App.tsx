@@ -45,6 +45,12 @@ function addItem(item: any) {
     data: item,
   };
 }
+function deleteItem(key: string) {
+  return {
+    type: 'DELETE_ITEM',
+    data: key,
+  };
+}
 
 const App = () => {
   function Submit(props: any) {
@@ -82,7 +88,7 @@ const App = () => {
       <Animated.View>
         <TouchableHighlight style={styles.rowFront} underlayColor={'#AAA'}>
           <View>
-            <Text>{data.item}</Text>
+            <Text>{data.item.value}</Text>
           </View>
         </TouchableHighlight>
       </Animated.View>
@@ -97,6 +103,7 @@ const App = () => {
 
     const handleDelete = (rowKey: any) => {
       console.log('onLeftAction', rowKey);
+      props.deleteItem(rowKey);
     };
 
     return (
@@ -106,13 +113,22 @@ const App = () => {
           data={listData}
           renderItem={renderItem}
           renderHiddenItem={renderHiddenItem}
-          rightOpenValue={-Dimensions.get('window').width}
+          // rightOpenValue={-Dimensions.get('window').width}
           // onSwipeValueChange={onSwipeValueChange}
           useNativeDriver={false}
+          // onRightAction={handleDelete}
+          //there we go
+          // onRowDidOpen={onRowDidOpen}
+          leftOpenValue={75}
+          rightOpenValue={-150}
+          leftActivationValue={100}
+          rightActivationValue={-200}
+          leftActionValue={0}
+          rightActionValue={-500}
           onLeftAction={handleDelete}
           onRightAction={handleDelete}
-          // leftActivationValue={100}
-          // rightActivationValue={-200}
+          // onLeftActionStatusChange={handleDelete}
+          // onRightActionStatusChange={handleDelete}
         />
       </>
     );
@@ -123,21 +139,41 @@ const App = () => {
       items: state.items,
     };
   }
-  const ItemsConnect = connect(mapStateToProps)(Items);
+  const mapDispatchToProps2 = {
+    deleteItem,
+  };
+
+  const ItemsConnect = connect(mapStateToProps, mapDispatchToProps2)(Items);
 
   function MyListContainer() {
     const initialState = {
-      items: ['Wash the dishes', 'Make my bed'],
+      items: [
+        {value: 'Wash the dishes', key: '0'},
+        {value: 'Make my bed', key: '1'},
+      ],
     };
 
+    let newKey = 1;
     //function needs testing
     function reducer(state = initialState, action: {type: any; data: any}) {
       switch (action.type) {
         case 'ADD_ITEM':
           console.log('added item');
+          newKey++;
+          let newKeyString = newKey.toString();
           return {
             ...state,
-            items: [...state.items, action.data],
+            items: [...state.items, {value: action.data, key: newKeyString}],
+          };
+        case 'DELETE_ITEM':
+          const newData = [...state.items];
+          const prevIndex = state.items.findIndex(
+            (item) => item.key === action.data.key,
+          );
+          newData.splice(prevIndex, 1);
+          return {
+            ...state,
+            items: newData,
           };
         default:
           return state;
