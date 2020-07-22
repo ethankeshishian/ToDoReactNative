@@ -21,7 +21,6 @@ import {
   View,
   Animated,
   TouchableHighlight,
-  Dimensions,
 } from 'react-native';
 
 import {SwipeListView} from 'react-native-swipe-list-view';
@@ -101,9 +100,9 @@ const App = () => {
       </View>
     );
 
-    const handleDelete = (rowKey: any) => {
-      console.log('onLeftAction', rowKey);
-      props.deleteItem(rowKey);
+    const handleDelete = (data: any) => {
+      console.log('onLeftAction', data);
+      props.deleteItem(data);
     };
 
     return (
@@ -116,8 +115,6 @@ const App = () => {
           // rightOpenValue={-Dimensions.get('window').width}
           // onSwipeValueChange={onSwipeValueChange}
           useNativeDriver={false}
-          // onRightAction={handleDelete}
-          //there we go
           // onRowDidOpen={onRowDidOpen}
           leftOpenValue={75}
           rightOpenValue={-150}
@@ -125,7 +122,7 @@ const App = () => {
           rightActivationValue={-200}
           leftActionValue={0}
           rightActionValue={-500}
-          onLeftAction={handleDelete}
+          // onLeftAction={handleDelete}
           onRightAction={handleDelete}
           // onLeftActionStatusChange={handleDelete}
           // onRightActionStatusChange={handleDelete}
@@ -168,7 +165,7 @@ const App = () => {
         case 'DELETE_ITEM':
           const newData = [...state.items];
           const prevIndex = state.items.findIndex(
-            (item) => item.key === action.data.key,
+            (item) => item.key === action.data,
           );
           newData.splice(prevIndex, 1);
           return {
@@ -292,13 +289,6 @@ const styles = StyleSheet.create({
 export default App;
 
 {
-  /* <Header /> */
-}
-
-{
-  /* <button onSubmit={handleSubmit} /> */
-}
-{
   /* {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
@@ -333,35 +323,3 @@ export default App;
             <LearnMoreLinks />
           </View> */
 }
-
-// const closeRow = (rowMap, rowKey) => {
-//   if (rowMap[rowKey]) {
-//     rowMap[rowKey].closeRow();
-//   }
-// };
-// const deleteRow = (rowMap, rowKey) => {
-//   closeRow(rowMap, rowKey);
-//   const newData = [...listData];
-//   const prevIndex = listData.findIndex((item) => item.key === rowKey);
-//   newData.splice(prevIndex, 1);
-//   props.setList(newData);
-// };
-
-//might not be necessary
-// const onSwipeValueChange = (swipeData) => {
-//   const {key, value} = swipeData;
-//   if (value < -Dimensions.get('window').width && !this.animationIsRunning) {
-//     this.animationIsRunning = true;
-//     Animated.timing(rowTranslateAnimatedValues[key], {
-//       toValue: 0,
-//       duration: 200,
-//       useNativeDriver: false,
-//     }).start(() => {
-//       const newData = [...listData];
-//       const prevIndex = listData.findIndex((item) => item.key === key);
-//       newData.splice(prevIndex, 1);
-//       setListData(newData);
-//       this.animationIsRunning = false;
-//     });
-//   }
-// };
