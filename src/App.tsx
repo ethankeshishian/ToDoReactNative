@@ -9,21 +9,10 @@
  * @format
  */
 
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Text,
-  StatusBar,
-  TextInput,
-  Button,
-  View,
-  Animated,
-  TouchableHighlight,
-} from 'react-native';
-
-import {SwipeListView} from 'react-native-swipe-list-view';
+import React from 'react';
+import {SafeAreaView, ScrollView, Text, StatusBar} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {MyListContainer} from './components/MyListContainer';
 
 // import // Header,
 // // LearnMoreLinks,
@@ -34,114 +23,7 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 
 // declare const global: {HermesInternal: null | {}};
 
-import {createStore} from 'redux';
-import {Provider, connect} from 'react-redux';
-import {addItem} from './actions/addItem';
-import {deleteItem} from './actions/deleteItem';
-import reducer from './reducers/itemReducer';
-
 const App = () => {
-  function Submit(props: any) {
-    const [item, setItem] = useState('');
-
-    function handleSubmit() {
-      if (item !== '') {
-        console.log('reached handlesubmit function');
-        props.addItem(item);
-        setItem('');
-      }
-    }
-
-    return (
-      <View>
-        <TextInput
-          style={styles.addItem}
-          onChangeText={(text) => setItem(text)}
-          value={item}
-          onSubmitEditing={handleSubmit}
-        />
-        <Button title="Add" onPress={handleSubmit} />
-      </View>
-    );
-  }
-
-  const mapDispatchToProps = {
-    addItem,
-  };
-  const SubmitConnect = connect(null, mapDispatchToProps)(Submit);
-
-  function Items(props: any) {
-    const listData = props.items;
-    const renderItem = (data: any) => (
-      <Animated.View>
-        <TouchableHighlight style={styles.rowFront} underlayColor={'#AAA'}>
-          <View>
-            <Text>{data.item.value}</Text>
-          </View>
-        </TouchableHighlight>
-      </Animated.View>
-    );
-    const renderHiddenItem = () => (
-      <View style={styles.rowBack}>
-        <View style={[styles.backRightBtn, styles.backRightBtnRight]}>
-          <Text style={styles.backTextWhite}>Delete</Text>
-        </View>
-      </View>
-    );
-
-    const handleDelete = (data: any) => {
-      console.log('onLeftAction', data);
-      props.deleteItem(data);
-    };
-
-    return (
-      <>
-        <SwipeListView
-          disableRightSwipe
-          data={listData}
-          renderItem={renderItem}
-          renderHiddenItem={renderHiddenItem}
-          // rightOpenValue={-Dimensions.get('window').width}
-          // onSwipeValueChange={onSwipeValueChange}
-          useNativeDriver={false}
-          // onRowDidOpen={onRowDidOpen}
-          leftOpenValue={75}
-          rightOpenValue={-150}
-          leftActivationValue={100}
-          rightActivationValue={-200}
-          leftActionValue={0}
-          rightActionValue={-500}
-          // onLeftAction={handleDelete}
-          onRightAction={handleDelete}
-          // onLeftActionStatusChange={handleDelete}
-          // onRightActionStatusChange={handleDelete}
-        />
-      </>
-    );
-  }
-
-  function mapStateToProps(state: any) {
-    return {
-      items: state.items,
-    };
-  }
-  const mapDispatchToProps2 = {
-    deleteItem,
-  };
-
-  const ItemsConnect = connect(mapStateToProps, mapDispatchToProps2)(Items);
-
-  function MyListContainer() {
-    const store = createStore(reducer);
-
-    return (
-      <Provider store={store}>
-        <ItemsConnect />
-        <SubmitConnect />
-      </Provider>
-    );
-  }
-
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -155,6 +37,44 @@ const App = () => {
     </>
   );
 };
+
+export default App;
+
+{
+  /* {global.HermesInternal == null ? null : (
+            <View style={styles.engine}>
+              <Text style={styles.footer}>Engine: Hermes</Text>
+            </View>
+          )}
+          <View style={styles.body}>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Step One</Text>
+              <Text style={styles.sectionDescription}>
+                Edit <Text style={styles.highlight}>App.tsx</Text> to change
+                this screen and then come back to see your edits.
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>See Your Changes</Text>
+              <Text style={styles.sectionDescription}>
+                <ReloadInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Debug</Text>
+              <Text style={styles.sectionDescription}>
+                <DebugInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Learn More</Text>
+              <Text style={styles.sectionDescription}>
+                Read the docs to discover what to do next:
+              </Text>
+            </View>
+            <LearnMoreLinks />
+          </View> */
+}
 
 const styles = StyleSheet.create({
   mainView: {
@@ -240,41 +160,3 @@ const styles = StyleSheet.create({
   //   textAlign: 'right',
   // },
 });
-
-export default App;
-
-{
-  /* {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change
-                this screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View> */
-}
