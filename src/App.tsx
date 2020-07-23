@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import {SafeAreaView, ScrollView, Text, StatusBar} from 'react-native';
+import {SafeAreaView, Text, StatusBar} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {MyListContainer} from './components/MyListContainer';
 
@@ -27,11 +27,8 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.mainView}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.title}>To-Do List:</Text>
-        <ScrollView style={styles.scrollView}>
-          {/* // contentInsetAdjustmentBehavior="automatic" */}
-        </ScrollView>
         <MyListContainer />
       </SafeAreaView>
     </>
@@ -77,14 +74,17 @@ export default App;
 }
 
 const styles = StyleSheet.create({
-  mainView: {
-    display: 'flex',
-  },
+  // mainView: {
+  //   display: 'flex',
+  // },
   title: {
     textAlign: 'center',
     fontSize: 32,
   },
-  scrollView: {},
+  container: {
+    flex: 1, // justifyContent: 'flex-end',
+  },
+  // scrollView: {},
   // engine: {
   //   position: 'absolute',
   //   right: 0,

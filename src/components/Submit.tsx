@@ -15,10 +15,11 @@ function Submit(props: any) {
   }
 
   return (
-    <View>
+    <View style={styles.addItem}>
       <TextInput
-        style={styles.addItem}
+        style={styles.textBox}
         onChangeText={(text) => setItem(text)}
+        placeholder="New task..."
         value={item}
         onSubmitEditing={handleSubmit}
       />
@@ -36,7 +37,12 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   addItem: {
-    // justifyContent: 'flex-end',
-    // alignContent: 'flex-end',
+    // flex: 1,
+    justifyContent: 'flex-end',
+    // marginBottom: 36,
+  },
+  textBox: {
+    borderColor: 'black',
+    borderWidth: 1,
   },
 });
