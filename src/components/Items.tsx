@@ -16,7 +16,7 @@ function Items(props: any) {
     <Animated.View>
       <TouchableHighlight style={styles.rowFront} underlayColor={'#AAA'}>
         <View>
-          <Text>{data.item.value}</Text>
+          <Text style={styles.frontTextBlack}>{data.item.value}</Text>
         </View>
       </TouchableHighlight>
     </Animated.View>
@@ -73,16 +73,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(Items);
 
 const styles = StyleSheet.create({
   //from swipe list container
+  frontTextBlack: {
+    fontSize: 32,
+  },
   backTextWhite: {
     color: '#FFF',
   },
   rowFront: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    paddingLeft: 10,
+    paddingRight: 10,
     backgroundColor: '#CCC',
     borderBottomColor: 'black',
     borderBottomWidth: 1,
     justifyContent: 'center',
-    height: 50,
+    // height: 75,
+    minHeight: 75,
   },
   rowBack: {
     alignItems: 'center',

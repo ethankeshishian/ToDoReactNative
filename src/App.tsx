@@ -78,8 +78,11 @@ const styles = StyleSheet.create({
   //   display: 'flex',
   // },
   title: {
-    textAlign: 'center',
-    fontSize: 32,
+    textAlign: 'left',
+    paddingLeft: 10,
+    fontSize: 48,
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
   },
   container: {
     flex: 1, // justifyContent: 'flex-end',

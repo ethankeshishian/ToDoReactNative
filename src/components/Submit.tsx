@@ -44,5 +44,9 @@ const styles = StyleSheet.create({
   textBox: {
     borderColor: 'black',
     borderWidth: 1,
+    height: 48,
+  },
+  button: {
+    height: 48,
   },
 });
