@@ -41,7 +41,6 @@ function Items(props: {
   );
 
   const handleDelete = (data: string) => {
-    console.log(data);
     props.deleteItem(data);
   };
 
