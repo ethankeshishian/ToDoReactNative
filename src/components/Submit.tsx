@@ -46,7 +46,4 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 48,
   },
-  button: {
-    height: 48,
-  },
 });
