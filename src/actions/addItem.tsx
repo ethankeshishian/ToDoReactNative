@@ -1,4 +1,4 @@
-export function addItem(item: any) {
+export function addItem(item: string) {
   return {
     type: 'ADD_ITEM',
     data: item,

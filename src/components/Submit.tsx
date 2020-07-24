@@ -3,7 +3,9 @@ import React, {useState} from 'react';
 import {View, TextInput, Button} from 'react-native';
 import {addItem} from '../actions/addItem';
 
-function Submit(props: any) {
+function Submit(props: {addItem: Function}) {
+  console.log(props);
+
   const [item, setItem] = useState('');
 
   function handleSubmit() {

@@ -10,9 +10,20 @@ import {
 import React from 'react';
 import {deleteItem} from '../actions/deleteItem';
 
-function Items(props: any) {
+function Items(props: {
+  items: [{value: string; key: string}];
+  deleteItem: Function;
+}) {
   const listData = props.items;
-  const renderItem = (data: any) => (
+  const renderItem = (data: {
+    item: {value: string; key: string};
+    index: number;
+    separators: {
+      highlight: Function;
+      unhighlight: Function;
+      updateProps: Function;
+    };
+  }) => (
     <Animated.View>
       <TouchableHighlight style={styles.rowFront} underlayColor={'#AAA'}>
         <View>
@@ -29,8 +40,8 @@ function Items(props: any) {
     </View>
   );
 
-  const handleDelete = (data: any) => {
-    console.log('onLeftAction', data);
+  const handleDelete = (data: string) => {
+    console.log(data);
     props.deleteItem(data);
   };
 
@@ -60,7 +71,7 @@ function Items(props: any) {
   );
 }
 
-function mapStateToProps(state: any) {
+function mapStateToProps(state: {items: [{value: string; key: string}]}) {
   return {
     items: state.items,
   };

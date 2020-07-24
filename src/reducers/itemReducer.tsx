@@ -5,7 +5,7 @@ const initialState = {
     {value: 'Make my bed', key: '1'},
   ],
 };
-function reducer(state = initialState, action: {type: any; data: any}) {
+function reducer(state = initialState, action: {type: string; data: string}) {
   switch (action.type) {
     case 'ADD_ITEM':
       console.log('added item');
