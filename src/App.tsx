@@ -13,7 +13,10 @@ import React from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {MyListContainer} from './components/MyListContainer';
-import {Header} from 'react-native-elements';
+import MainHeader from './components/MainHeader';
+import {createStore} from 'redux';
+import reducer from './reducers/itemReducer';
+import {Provider} from 'react-redux';
 
 // import // Header,
 // // LearnMoreLinks,
@@ -25,21 +28,16 @@ import {Header} from 'react-native-elements';
 // declare const global: {HermesInternal: null | {}};
 
 const App = () => {
+  const store = createStore(reducer);
+
   return (
     <>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <Header
-          containerStyle={styles.header}
-          leftComponent={{icon: 'menu', color: '#000'}}
-          centerComponent={{
-            text: 'To-Do List',
-            style: {color: '#000', fontSize: 32},
-          }}
-          rightComponent={{icon: 'delete', color: '#000'}}
-        />
-        {/* <Text style={styles.title}>To-Do List:</Text> */}
-        <MyListContainer />
+        <Provider store={store}>
+          <MainHeader />
+          <MyListContainer />
+        </Provider>
       </SafeAreaView>
     </>
   );
@@ -96,11 +94,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1, // justifyContent: 'flex-end',
-  },
-  header: {
-    backgroundColor: 'white',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
   },
   // scrollView: {},
   // engine: {

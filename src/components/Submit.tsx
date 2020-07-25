@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import React, {useState} from 'react';
 import {View, TextInput, Button} from 'react-native';
 import {addItem} from '../actions/addItem';
+import {StyleSheet} from 'react-native';
 
 function Submit(props: {addItem: Function}) {
   const [item, setItem] = useState('');
@@ -31,8 +32,6 @@ const mapDispatchToProps = {
   addItem,
 };
 export default connect(null, mapDispatchToProps)(Submit);
-
-import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   addItem: {

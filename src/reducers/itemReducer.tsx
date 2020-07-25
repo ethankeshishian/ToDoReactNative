@@ -25,6 +25,11 @@ function reducer(state = initialState, action: {type: string; data: string}) {
         ...state,
         items: newData,
       };
+    case 'DELETE_ALL':
+      newKey = -1;
+      return {
+        items: [],
+      };
     default:
       return state;
   }
