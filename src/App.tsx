@@ -10,9 +10,10 @@
  */
 
 import React from 'react';
-import {SafeAreaView, Text, StatusBar} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {MyListContainer} from './components/MyListContainer';
+import {Header} from 'react-native-elements';
 
 // import // Header,
 // // LearnMoreLinks,
@@ -26,9 +27,18 @@ import {MyListContainer} from './components/MyListContainer';
 const App = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>To-Do List:</Text>
+        <Header
+          containerStyle={styles.header}
+          leftComponent={{icon: 'menu', color: '#000'}}
+          centerComponent={{
+            text: 'To-Do List',
+            style: {color: '#000', fontSize: 32},
+          }}
+          rightComponent={{icon: 'delete', color: '#000'}}
+        />
+        {/* <Text style={styles.title}>To-Do List:</Text> */}
         <MyListContainer />
       </SafeAreaView>
     </>
@@ -86,6 +96,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1, // justifyContent: 'flex-end',
+  },
+  header: {
+    backgroundColor: 'white',
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
   },
   // scrollView: {},
   // engine: {
