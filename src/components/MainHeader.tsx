@@ -8,14 +8,14 @@ function MainHeader(props: {deleteAll: Function}) {
   return (
     <Header
       containerStyle={styles.header}
-      leftComponent={{icon: 'menu', color: '#000'}}
+      leftComponent={{icon: 'menu', color: '#FFF'}}
       centerComponent={{
         text: 'To-Do List',
-        style: {color: '#000', fontSize: 32},
+        style: {color: '#FFF', fontSize: 32},
       }}
       rightComponent={{
         icon: 'delete',
-        color: '#000',
+        color: '#FFF',
         onPress: () => props.deleteAll(),
       }}
     />
@@ -23,8 +23,8 @@ function MainHeader(props: {deleteAll: Function}) {
 }
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'white',
-    borderBottomColor: 'black',
+    backgroundColor: 'maroon',
+    borderBottomColor: 'grey',
     borderBottomWidth: 1,
   },
 });

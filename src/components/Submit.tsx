@@ -23,7 +23,7 @@ function Submit(props: {addItem: Function}) {
         value={item}
         onSubmitEditing={handleSubmit}
       />
-      <Button title="Add" onPress={handleSubmit} />
+      <Button color="maroon" title="Add" onPress={handleSubmit} />
     </View>
   );
 }

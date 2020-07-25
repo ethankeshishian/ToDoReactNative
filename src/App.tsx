@@ -32,7 +32,7 @@ const App = () => {
 
   return (
     <>
-      <StatusBar backgroundColor="white" barStyle="dark-content" />
+      <StatusBar backgroundColor="maroon" barStyle="light-content" />
       <SafeAreaView style={styles.container}>
         <Provider store={store}>
           <MainHeader />
