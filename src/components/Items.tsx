@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 15,
+    // minHeight: 75,
   },
   backRightBtn: {
     alignItems: 'center',
