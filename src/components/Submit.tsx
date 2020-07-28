@@ -1,8 +1,13 @@
 import {connect} from 'react-redux';
 import React, {useState} from 'react';
-import {View, TextInput, Button} from 'react-native';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+} from 'react-native';
 import {addItem} from '../actions/addItem';
-import {StyleSheet} from 'react-native';
 
 function Submit(props: {addItem: Function}) {
   const [item, setItem] = useState('');
@@ -23,7 +28,12 @@ function Submit(props: {addItem: Function}) {
         value={item}
         onSubmitEditing={handleSubmit}
       />
-      <Button color="maroon" title="Add" onPress={handleSubmit} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleSubmit}
+        activeOpacity={0.5}>
+        <Text style={styles.buttonText}>ADD</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -35,13 +45,23 @@ export default connect(null, mapDispatchToProps)(Submit);
 
 const styles = StyleSheet.create({
   addItem: {
-    // flex: 1,
-    justifyContent: 'flex-end',
+    // // flex: 1,
+    // justifyContent: 'flex-end',
     // marginBottom: 36,
   },
   textBox: {
     borderColor: 'black',
     borderWidth: 1,
     height: 48,
+  },
+  button: {
+    backgroundColor: 'maroon',
+    justifyContent: 'center',
+    height: 48,
+  },
+  buttonText: {
+    color: 'white',
+    alignSelf: 'center',
+    fontSize: 20,
   },
 });
