@@ -9,7 +9,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {MyListContainer} from './components/MyListContainer';
@@ -17,6 +17,7 @@ import MainHeader from './components/MainHeader';
 import {createStore} from 'redux';
 import reducer from './reducers/itemReducer';
 import {Provider} from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 
 // import // Header,
 // // LearnMoreLinks,
@@ -28,6 +29,10 @@ import {Provider} from 'react-redux';
 // declare const global: {HermesInternal: null | {}};
 
 const App = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   const store = createStore(reducer);
 
   return (
