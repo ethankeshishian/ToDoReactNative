@@ -11,7 +11,7 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:background">@drawable/background_splash</item>
         <item name="android:statusBarColor">@color/maroon</item>
         <item name="colorPrimaryDark">@color/maroon</item>
 
