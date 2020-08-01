@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
       //this, R.style.SplashTheme taken from repo, for changing status bar color.
       //This also prevents the app from fading in.
-        SplashScreen.show(this, R.style.splashTheme);
+        SplashScreen.show(this, R.style.SplashTheme);
         super.onCreate(savedInstanceState);
     }
 

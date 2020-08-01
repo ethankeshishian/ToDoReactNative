@@ -8,13 +8,15 @@ import {
   StyleSheet,
 } from 'react-native';
 import {addItem} from '../actions/addItem';
+import moment from 'moment';
 
 function Submit(props: {addItem: Function}) {
   const [item, setItem] = useState('');
 
   function handleSubmit() {
     if (item !== '') {
-      props.addItem(item);
+      let dateCreated = moment().format('l');
+      props.addItem(item, dateCreated);
       setItem('');
     }
   }

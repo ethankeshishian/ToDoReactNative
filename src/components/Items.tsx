@@ -11,12 +11,12 @@ import React from 'react';
 import {deleteItem} from '../actions/deleteItem';
 
 function Items(props: {
-  items: [{value: string; key: string}];
+  items: [{value: string; key: string; date: string}];
   deleteItem: Function;
 }) {
   const listData = props.items;
   const renderItem = (data: {
-    item: {value: string; key: string};
+    item: {value: string; key: string; date: string};
     index: number;
     separators: {
       highlight: Function;
@@ -28,6 +28,7 @@ function Items(props: {
       <TouchableHighlight style={styles.rowFront} underlayColor={'#AAA'}>
         <View>
           <Text style={styles.frontTextBlack}>{data.item.value}</Text>
+          <Text>{data.item.date}</Text>
         </View>
       </TouchableHighlight>
     </Animated.View>
@@ -70,7 +71,9 @@ function Items(props: {
   );
 }
 
-function mapStateToProps(state: {items: [{value: string; key: string}]}) {
+function mapStateToProps(state: {
+  items: [{value: string; key: string; date: string}];
+}) {
   return {
     items: state.items,
   };

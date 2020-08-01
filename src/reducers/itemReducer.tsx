@@ -1,11 +1,14 @@
 let newKey = 1;
 const initialState = {
   items: [
-    {value: 'Wash the dishes', key: '0'},
-    {value: 'Make my bed', key: '1'},
+    {value: 'Wash the dishes', key: '0', date: '7/29/2020'},
+    {value: 'Make my bed', key: '1', date: '7/30/2020'},
   ],
 };
-function reducer(state = initialState, action: {type: string; data: string}) {
+function reducer(
+  state = initialState,
+  action: {type: string; data: {item: string; date: string}},
+) {
   switch (action.type) {
     case 'ADD_ITEM':
       console.log('added item');
@@ -13,12 +16,15 @@ function reducer(state = initialState, action: {type: string; data: string}) {
       let newKeyString = newKey.toString();
       return {
         ...state,
-        items: [...state.items, {value: action.data, key: newKeyString}],
+        items: [
+          ...state.items,
+          {value: action.data.item, key: newKeyString, date: action.data.date},
+        ],
       };
     case 'DELETE_ITEM':
       const newData = [...state.items];
       const prevIndex = state.items.findIndex(
-        (item) => item.key === action.data,
+        (item) => item.key === action.data.item,
       );
       newData.splice(prevIndex, 1);
       return {
