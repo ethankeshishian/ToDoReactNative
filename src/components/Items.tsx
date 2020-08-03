@@ -6,13 +6,16 @@ import {
   View,
   StyleSheet,
   Text,
+  TextInput,
 } from 'react-native';
 import React from 'react';
 import {deleteItem} from '../actions/deleteItem';
+import {editItem} from '../actions/editItem';
 
 function Items(props: {
   items: [{value: string; key: string; date: string}];
   deleteItem: Function;
+  editItem: Function;
 }) {
   const listData = props.items;
   const renderItem = (data: {
@@ -27,7 +30,16 @@ function Items(props: {
     <Animated.View>
       <TouchableHighlight style={styles.rowFront} underlayColor={'#AAA'}>
         <View>
-          <Text style={styles.frontTextBlack}>{data.item.value}</Text>
+          {/* <Text style={styles.frontTextBlack}>{data.item.value}</Text> */}
+          <TextInput
+            style={styles.frontTextBlackInput}
+            multiline={true}
+            value={data.item.value}
+            onChangeText={(newText: string) =>
+              handleItemEdit(data.item.value, newText)
+            }
+            blurOnSubmit={true}
+          />
           <Text>{data.item.date}</Text>
         </View>
       </TouchableHighlight>
@@ -43,6 +55,10 @@ function Items(props: {
 
   const handleDelete = (data: string) => {
     props.deleteItem(data);
+  };
+
+  const handleItemEdit = (oldText: string, newText: string) => {
+    props.editItem(oldText, newText);
   };
 
   return (
@@ -80,6 +96,7 @@ function mapStateToProps(state: {
 }
 const mapDispatchToProps = {
   deleteItem,
+  editItem,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Items);
@@ -89,13 +106,18 @@ const styles = StyleSheet.create({
   frontTextBlack: {
     fontSize: 32,
   },
+  frontTextBlackInput: {
+    fontSize: 32,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+
   backTextWhite: {
     color: '#FFF',
   },
   rowFront: {
     alignItems: 'flex-start',
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingHorizontal: 10,
     backgroundColor: '#FFF',
     borderBottomColor: 'grey',
     borderBottomWidth: 1,

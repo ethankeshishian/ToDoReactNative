@@ -7,7 +7,10 @@ const initialState = {
 };
 function reducer(
   state = initialState,
-  action: {type: string; data: {item: string; date: string}},
+  action: {
+    type: string;
+    data: {item: string; date: string; oldText: string; newText: string};
+  },
 ) {
   switch (action.type) {
     case 'ADD_ITEM':
@@ -22,8 +25,8 @@ function reducer(
         ],
       };
     case 'DELETE_ITEM':
-      const newData = [...state.items];
-      const prevIndex = state.items.findIndex(
+      var newData = [...state.items];
+      var prevIndex = state.items.findIndex(
         (item) => item.key === action.data.item,
       );
       newData.splice(prevIndex, 1);
@@ -35,6 +38,17 @@ function reducer(
       newKey = -1;
       return {
         items: [],
+      };
+    case 'EDIT_ITEM':
+      var newData = [...state.items];
+      var prevIndex = state.items.findIndex(
+        (item) => item.value === action.data.oldText,
+      );
+      newData[prevIndex].value = action.data.newText;
+      console.log(newData);
+      return {
+        ...state,
+        items: newData,
       };
     default:
       return state;

@@ -29,6 +29,7 @@ function Submit(props: {addItem: Function}) {
         placeholder="New task..."
         value={item}
         onSubmitEditing={handleSubmit}
+        clearButtonMode="while-editing" //only iOS
       />
       <TouchableOpacity
         style={styles.button}
