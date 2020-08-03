@@ -36,7 +36,7 @@ function Items(props: {
             multiline={true}
             value={data.item.value}
             onChangeText={(newText: string) =>
-              handleItemEdit(data.item.value, newText)
+              handleItemEdit(data.item.key, newText)
             }
             blurOnSubmit={true}
           />

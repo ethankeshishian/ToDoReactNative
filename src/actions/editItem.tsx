@@ -1,6 +1,6 @@
-export function editItem(oldText: string, newText: string) {
+export function editItem(key: string, newText: string) {
   return {
     type: 'EDIT_ITEM',
-    data: {oldText: oldText, newText: newText},
+    data: {key: key, newText: newText},
   };
 }
