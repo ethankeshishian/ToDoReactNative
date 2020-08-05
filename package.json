@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
     "@reduxjs/toolkit": "^1.4.0",
     "@types/react-redux": "^7.1.9",
     "jetifier": "^1.6.6",
@@ -21,7 +22,8 @@
     "react-native-swipe-list-view": "^3.2.3",
     "react-native-vector-icons": "^7.0.0",
     "react-redux": "^7.2.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

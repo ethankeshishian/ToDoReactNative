@@ -14,10 +14,11 @@ import {SafeAreaView, StatusBar} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {MyListContainer} from './components/MyListContainer';
 import MainHeader from './components/MainHeader';
-import {createStore} from 'redux';
-import reducer from './reducers/itemReducer';
 import {Provider} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
+import {getStore, getPersistor} from './store';
+// import persistor from './store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 // import // Header,
 // // LearnMoreLinks,
@@ -32,16 +33,17 @@ const App = () => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
-
-  const store = createStore(reducer);
-
+  const store = getStore();
+  const persistor = getPersistor();
   return (
     <>
       <StatusBar backgroundColor="maroon" barStyle="light-content" />
       <SafeAreaView style={styles.container}>
         <Provider store={store}>
-          <MainHeader />
-          <MyListContainer />
+          <PersistGate persistor={persistor} loading={null}>
+            <MainHeader />
+            <MyListContainer />
+          </PersistGate>
         </Provider>
       </SafeAreaView>
     </>
